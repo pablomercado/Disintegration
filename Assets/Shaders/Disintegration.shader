@@ -13,7 +13,7 @@
         _DissolveBorder("Dissolve Border", float) =  0.05
 
 
-        _Exapnd("Expand", float) = 1
+        _Expand("Expand", float) = 1
         _Weight("Weight", Range(0,1)) = 0
         _Direction("Direction", Vector) = (0, 0, 0, 0)
         [HDR]_DisintegrationColor("Disintegration Color", Color) = (1, 1, 1, 1)
@@ -44,7 +44,7 @@
         float _DissolveBorder;
 
 
-        float _Exapnd;
+        float _Expand;
         float _Weight;
         float4 _Direction;
         float4 _DisintegrationColor;
@@ -106,7 +106,7 @@
 
         [maxvertexcount(7)]
         void geom(triangle v2g IN[3], inout TriangleStream<g2f> triStream){
-
+            //Comment in 
             float2 avgUV = (IN[0].uv + IN[1].uv + IN[2].uv) / 3;
             float3 avgPos = (IN[0].objPos + IN[1].objPos + IN[2].objPos) / 3;
             float3 avgNormal = (IN[0].normal + IN[1].normal + IN[2].normal) / 3;
@@ -118,7 +118,7 @@
             float4 flowVector = remapFlowTexture(tex2Dlod(_FlowMap, float4(flowUV, 0, 0)));
 
             float3 pseudoRandomPos = (avgPos) + _Direction;
-            pseudoRandomPos += (flowVector.xyz * _Exapnd);
+            pseudoRandomPos += (flowVector.xyz * _Expand);
 
             float3 p =  lerp(avgPos, pseudoRandomPos, t);
             float radius = lerp(_R, 0, t);
